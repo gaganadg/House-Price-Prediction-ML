@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🏠 House Price Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 House Price Prediction</h1>
+
+        <label>Lot Area (sq ft):</label>
+        <input type="number" id="lot_area" placeholder="Enter lot area">
+
+        <label>Number of Bedrooms:</label>
+        <input type="number" id="bedrooms" placeholder="Enter bedrooms">
+
+        <label>Number of Bathrooms:</label>
+        <input type="number" id="bathrooms" placeholder="Enter bathrooms">
+
+        <button onclick="predictPrice()">Predict Price</button>
+
+        <div id="result"></div>
+
+        <br>
+        <a href="/history" class="link-btn">📜 View Prediction History</a>
+    </div>
+
+    <script src="/static/script.jss"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction History</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📜 Prediction History</h1>
+        {% if predictions %}
+        <table>
+            <tr>
+                <th>Lot Area</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>Price (USD)</th>
+                <th>Price (INR)</th>
+                <th>Date & Time</th>
+                <th>Action</th>
+            </tr>
+            {% for row in predictions %}
+            <tr id="row-{{ row[0] }}">
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>${{ "%.2f"|format(row[4]) }}</td>
+                <td>₹{{ "%.2f"|format(row[5]) }}</td>
+                <td>{{ row[6] }}</td>
+                <td>
+                    <button class="delete-btn" onclick="deleteRecord({{ row[0] }})">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button class="clear-btn" onclick="deleteAll()">🗑 Clear All</button>
+        {% else %}
+        <p>No history found.</p>
+        {% endif %}
+        <br>
+        <a href="/" class="link-btn">⬅ Back to Home</a>
+    </div>
+
+    <script>
+        function deleteRecord(recordId) {
+            fetch(`/delete/${recordId}`, { method: "POST" })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById(`row-${recordId}`).remove();
+                    }
+                });
+        }
+
+        function deleteAll() {
+            if (confirm("Are you sure you want to delete all records?")) {
+                fetch(`/delete_all`, { method: "POST" })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        }
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
